@@ -1,5 +1,6 @@
 package com.bhaktijkoli.voicebot;
 
+import android.speech.tts.Voice;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,9 +8,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mapzen.speakerbox.Speakerbox;
 import com.maxwell.speechrecognition.OnSpeechRecognitionListener;
 import com.maxwell.speechrecognition.OnSpeechRecognitionPermissionListener;
 import com.maxwell.speechrecognition.SpeechRecognition;
+
+import java.util.Locale;
 
 /**
  * Created by Bhaktij on 02/09/18.
@@ -21,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements OnSpeechRecogniti
 
     private String TAG = "MainActivity";
     private SpeechRecognition speechRecognition;
+    private Speakerbox speakerbox;
     private TextView tvStatus;
     private ImageView btnVoice;
     private Boolean isListening = false;
@@ -36,7 +41,10 @@ public class MainActivity extends AppCompatActivity implements OnSpeechRecogniti
         speechRecognition = new SpeechRecognition(this);
         speechRecognition.setSpeechRecognitionPermissionListener(this);
         speechRecognition.setSpeechRecognitionListener(this);
-
+        speakerbox = new Speakerbox(getApplication());
+//        speakerbox.getTextToSpeech().setPitch(new Float(0.3));
+        speakerbox.getTextToSpeech().setLanguage(Locale.GERMANY);
+        speakerbox.play("Hello, tap on the mic icon ");
         btnVoice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
